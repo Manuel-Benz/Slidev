@@ -23,6 +23,10 @@ EXTRA_CSS = """<style>
 .steps p{margin:6px 0}
 .task p+p{margin-top:6px}
 .center{text-align:center}
+.solution{color:#b22222;margin:5px 0;font-size:24px;line-height:1.35}
+.solution b,.solution strong{color:#b22222}
+.solution.formula{margin:6px 0;font-size:24px}
+.columns .solution,.two .solution{font-size:21px}
 .section-body{flex-direction:column;gap:22px}
 .section-lead{font-size:22px;color:#333;max-width:760px;text-align:center}
 </style>"""
@@ -55,6 +59,16 @@ def r(html, step=None):
 	"""Reveal block, optionally with an explicit step number."""
 	s = f' data-step="{step}"' if step else ''
 	return f'<div class="reveal"{s}>{html}</div>'
+
+
+def sol(html, step=None):
+	"""One solution step in firebrick, revealed on its own."""
+	return r(f'<p class="solution">{html}</p>', step)
+
+
+def solf(html, step=None):
+	"""Solution step containing fractions."""
+	return r(f'<div class="solution formula compact">{html}</div>', step)
 
 
 A, B = '<i>A</i>', '<i>B</i>'
@@ -138,122 +152,138 @@ slides[-1] = slides[-1][:3] + (slides[-1][3].replace(
 	'<g class="reveal hl" data-step="1">',
 	'<g class="reveal" data-step="2"><circle cx="158" cy="165" r="100" fill="#ecd4d4"/><circle cx="242" cy="165" r="100" fill="#ecd4d4"/></g><g class="reveal hl" data-step="1">'),)
 
-slide('F Addition law', 'Counting first', f'''
-<div class="columns"><div>{venn('s3', hl='AB', hl_step=2, numbers=['12', '2', '17', '68'], selected=(1,))}</div>
+slide('F Addition law', 'Counting first', f"""
+<div class="columns"><div>{venn('s3', hl='AB', hl_step=3, numbers=['12', '2', '17', '68'], selected=(1,))}</div>
 <div>
 <div class="task q"><p><i>U</i> = {{1, 2, …, 99}}</p><p>{A}: multiples of 7, {B}: multiples of 5</p></div>
-{r(f'<div class="eq">n({A}) = 14, n({B}) = 19</div>', 1)}
-{r(f'<div class="eq">n({A}{CAP}{B}) = 2 <span class="small">(35 and 70)</span></div>', 2)}
-{r(f'<div class="eq">n({A}{CUP}{B}) = 31, not 14 + 19 = 33</div><p class="small">35 and 70 are counted twice.</p>', 3)}
-{r(f'<div class="thm"><p>n({A}{CUP}{B}) = n({A}) + n({B}) − n({A}{CAP}{B})</p></div>', 4)}
-</div></div>''')
+{sol(f'n({A}) = 14', 1)}
+{sol(f'n({B}) = 19', 2)}
+{sol(f'n({A}{CAP}{B}) = 2 (35 and 70)', 3)}
+{sol(f'n({A}{CUP}{B}) = 31, not 14 + 19 = 33', 4)}
+{sol('35 and 70 are counted twice.', 5)}
+{r(f'<div class="thm"><p>n({A}{CUP}{B}) = n({A}) + n({B}) − n({A}{CAP}{B})</p></div>', 6)}
+</div></div>""")
 
-slide('F Addition law', 'The addition law of probability', f'''
+slide('F Addition law', 'The addition law of probability', f"""
 <p>Dividing by n(<i>U</i>) gives the addition law:</p>
 <div class="thm"><div class="thm-title">Addition law</div>
 <div class="formula law">P({A}{CUP}{B}) = P({A}) + P({B}) − P({A}{CAP}{B})</div>
 <p class="center">P(either {A} or {B} or both) = P({A}) + P({B}) − P(both {A} and {B})</p></div>
 {r(f'<div class="remark"><p>P({A}{CAP}{B}) is subtracted because it is contained in P({A}) and in P({B}).</p></div>')}
-''')
+""")
 
-slide('F Addition law', 'Example 13', f'''
+slide('F Addition law', 'Example 13', f"""
 <div class="task q"><p>If P({A}) = 0.6, P({A}{CUP}{B}) = 0.7 and P({A}{CAP}{B}) = 0.3, find P({B}).</p></div>
-<div class="steps">
-{r(f'<div class="eq big">P({A}{CUP}{B}) = P({A}) + P({B}) − P({A}{CAP}{B})</div>')}
-{r(f'<div class="eq big">0.7 = 0.6 + P({B}) − 0.3</div>')}
-{r(f'<p class="result">P({B}) = <strong>0.4</strong></p>')}
-</div>''')
+{sol(f'P({A}{CUP}{B}) = P({A}) + P({B}) − P({A}{CAP}{B})')}
+{sol(f'0.7 = 0.6 + P({B}) − 0.3')}
+{sol(f'0.7 = 0.3 + P({B})')}
+{sol(f'P({B}) = <b>0.4</b>')}
+""")
 
-slide('F Addition law', 'Mutually exclusive events', f'''
+slide('F Addition law', 'Mutually exclusive events', f"""
 <div class="columns"><div>{venn('s6', disjoint=True, aria='Venn diagram of two disjoint events A and B')}</div>
 <div>
 <div class="def"><div class="thm-title">Definition</div><p>{A} and {B} are <b>mutually exclusive</b> (disjoint) if they cannot occur at the same time:</p>
 <p class="center">{A}{CAP}{B} = ∅, so P({A}{CAP}{B}) = 0</p></div>
 {r(f'<div class="thm"><p>For mutually exclusive events the addition law becomes</p><div class="formula law">P({A}{CUP}{B}) = P({A}) + P({B})</div></div>')}
-</div></div>''')
+</div></div>""")
 
-slide('F Addition law', 'Example 14', f'''
+slide('F Addition law', 'Example 14', f"""
 <div class="task q"><p>30 students write a History test: 7 score an A, 11 score a B. One student is selected at random.</p>
 <p>{A}: the student scored an A, {B}: the student scored a B</p>
 <p><b>a)</b> Are {A} and {B} mutually exclusive? <b>b)</b> Find P({A}), P({B}), P({A}{CAP}{B}) and P({A}{CUP}{B}).</p></div>
-{r(f'<div class="eq"><b>a)</b> No student can score both an A and a B, so {A} and {B} are mutually exclusive.</div>')}
-{r(f'<div class="eq"><b>b)</b> P({A}) = {fr(7, 30)}, P({B}) = {fr(11, 30)}, P({A}{CAP}{B}) = 0</div>')}
-{r(f'<div class="formula compact">P({A}{CUP}{B}) = {fr(7, 30)} + {fr(11, 30)} = {fr(18, 30)} = <strong>{fr(3, 5)}</strong></div>')}
-''')
+<div class="two"><div>
+{sol('<b>a)</b> No student can score both an A and a B.')}
+{sol(f'{A} and {B} are mutually exclusive.')}
+</div><div>
+{solf(f'<b>b)</b> P({A}) = {fr(7, 30)}, P({B}) = {fr(11, 30)}')}
+{sol(f'P({A}{CAP}{B}) = 0')}
+{solf(f'P({A}{CUP}{B}) = {fr(7, 30)} + {fr(11, 30)} = {fr(18, 30)} = <b>{fr(3, 5)}</b>')}
+</div></div>
+""")
 
-slide('F Exercise 1', 'Using the addition law', f'''
-<div class="columns"><div>{venn('s8', hl='outside', hl_step=3, numbers=['0.10', '0.25', '0.25', '0.40'], selected=(3,))}</div>
+slide('F Exercise 1', 'Using the addition law', f"""
+<div class="columns"><div>{venn('s8', hl='outside', hl_step=4, numbers=['0.10', '0.25', '0.25', '0.40'], selected=(3,))}</div>
 <div>
 <div class="task q"><p>P({A}) = 0.35, P({B}) = 0.5 and P({A}{CUP}{B}) = 0.6</p>
 <p><b>a)</b> Find P({A}{CAP}{B}). <b>b)</b> Find the probability that neither {A} nor {B} occurs. <b>c)</b> Are {A} and {B} mutually exclusive?</p></div>
-{r(f'<div class="eq"><b>a)</b> P({A}{CAP}{B}) = 0.35 + 0.5 − 0.6 = <b>0.25</b></div>', 1)}
-{r(f'<div class="eq"><b>b)</b> P(({A}{CUP}{B})′) = 1 − 0.6 = <b>0.4</b></div>', 3)}
-{r(f'<div class="eq"><b>c)</b> No, since P({A}{CAP}{B}) = 0.25 ≠ 0.</div>', 4)}
-</div></div>''')
-# numbers in the Venn diagram appear together with a)
-slides[-1] = slides[-1][:3] + (slides[-1][3].replace('<g class="numbers">', '<g class="numbers reveal" data-step="2">'),)
+{sol(f'<b>a)</b> P({A}{CAP}{B}) = P({A}) + P({B}) − P({A}{CUP}{B})', 1)}
+{sol(f'= 0.35 + 0.5 − 0.6 = <b>0.25</b>', 2)}
+{sol(f"<b>b)</b> P(({A}{CUP}{B})′) = 1 − P({A}{CUP}{B})", 4)}
+{sol('= 1 − 0.6 = <b>0.4</b>', 5)}
+{sol(f'<b>c)</b> P({A}{CAP}{B}) = 0.25 ≠ 0: not mutually exclusive', 6)}
+</div></div>""")
+# numbers in the Venn diagram appear after a)
+slides[-1] = slides[-1][:3] + (slides[-1][3].replace('<g class="numbers">', '<g class="numbers reveal" data-step="3">'),)
 
-slide('F Exercise 2', 'Tickets 1 to 20', f'''
+slide('F Exercise 2', 'Tickets 1 to 20', f"""
 <div class="task q"><p>A ticket is drawn at random from tickets numbered 1 to 20.</p>
 <p>{A}: multiple of 3, {B}: multiple of 4, <i>C</i>: odd number</p>
 <p><b>a)</b> Find P({A}{CUP}{B}). <b>b)</b> Are {B} and <i>C</i> mutually exclusive? Find P({B}{CUP}<i>C</i>).</p></div>
 <div class="two"><div>
-{r(f'<div class="eq"><b>a)</b> {A} = {{3, 6, 9, 12, 15, 18}}<br>{B} = {{4, 8, 12, 16, 20}}, {A}{CAP}{B} = {{12}}</div>')}
-{r(f'<div class="formula compact">P({A}{CUP}{B}) = {fr(6, 20)} + {fr(5, 20)} − {fr(1, 20)} = <strong>{fr(1, 2)}</strong></div>')}
+{sol(f'<b>a)</b> {A} = {{3, 6, 9, 12, 15, 18}}')}
+{sol(f'{B} = {{4, 8, 12, 16, 20}}')}
+{sol(f'{A}{CAP}{B} = {{12}}')}
+{solf(f'P({A}{CUP}{B}) = {fr(6, 20)} + {fr(5, 20)} − {fr(1, 20)} = <b>{fr(1, 2)}</b>')}
 </div><div>
-{r(f'<div class="eq"><b>b)</b> Multiples of 4 are even: <span style="white-space:nowrap">{B}{CAP}<i>C</i> = ∅</span>, so they are mutually exclusive.</div>')}
-{r(f'<div class="formula compact">P({B}{CUP}<i>C</i>) = {fr(5, 20)} + {fr(10, 20)} = <strong>{fr(3, 4)}</strong></div>')}
-</div></div>''')
+{sol('<b>b)</b> Multiples of 4 are even.')}
+{sol(f'{B}{CAP}<i>C</i> = ∅: mutually exclusive')}
+{solf(f'P({B}{CUP}<i>C</i>) = {fr(5, 20)} + {fr(10, 20)} = <b>{fr(3, 4)}</b>')}
+</div></div>""")
 
 section('G Independent events', 'Two events are independent if the occurrence of each event does not affect the occurrence of the other.')
 
 cells_h = ''.join('<td>·</td>' for _ in range(5)) + '<td class="hl reveal" data-step="1">×</td>'
 cells_t = ''.join('<td>·</td>' for _ in range(6))
-slide('G Independent events', 'Coin and die', f'''
+slide('G Independent events', 'Coin and die', f"""
 <div class="two"><div>
 <h3 class="lead">A coin is tossed and a die is rolled.</h3>
 <table class="grid-table"><tr><th></th>{''.join(f'<th>{k}</th>' for k in range(1, 7))}</tr>
 <tr><th>H</th>{cells_h}</tr><tr><th>T</th>{cells_t}</tr></table>
 <p class="small">12 equally likely outcomes. The coin does not affect the die.</p>
 </div><div>
-{r(f'<div class="formula compact">P(H{CAP}6) = {fr(1, 12)}</div>', 1)}
-{r(f'<div class="formula compact">P(H) · P(6) = {fr(1, 2)} · {fr(1, 6)} = {fr(1, 12)}</div>', 2)}
+{solf(f'P(H{CAP}6) = {fr(1, 12)}', 1)}
+{solf(f'P(H) · P(6) = {fr(1, 2)} · {fr(1, 6)} = {fr(1, 12)}', 2)}
 </div></div>
 {r(f'<div class="thm"><div class="thm-title">Independent events</div><p class="center" style="font-size:26px">{A} and {B} are independent ⟺ P({A}{CAP}{B}) = P({A}) · P({B})</p></div>', 3)}
-''')
+""")
 
-slide('G Independent events', 'Example', f'''
+slide('G Independent events', 'Example', f"""
 <div class="task q"><p>{A} and {B} are independent with P({A}) = 0.3 and P({B}) = 0.5. Find P({A}{CAP}{B}) and P({A}{CUP}{B}).</p></div>
-{r(f'<div class="eq big">P({A}{CAP}{B}) = 0.3 · 0.5 = <b>0.15</b></div>')}
-{r(f'<div class="eq big">P({A}{CUP}{B}) = 0.3 + 0.5 − 0.15 = <b>0.65</b></div>')}
+{sol(f'P({A}{CAP}{B}) = P({A}) · P({B}) = 0.3 · 0.5 = <b>0.15</b>')}
+{sol(f'P({A}{CUP}{B}) = P({A}) + P({B}) − P({A}{CAP}{B})')}
+{sol(f'P({A}{CUP}{B}) = 0.3 + 0.5 − 0.15 = <b>0.65</b>')}
 {r(f'<div class="remark"><div class="thm-title" style="color:#c47a00">Careful</div><p>Mutually exclusive does not mean independent. If P({A}) &gt; 0, P({B}) &gt; 0 and {A}, {B} are mutually exclusive, then P({A}{CAP}{B}) = 0 ≠ P({A}) · P({B}): if {A} occurs, {B} cannot occur.</p></div>')}
-''')
+""")
 
-slide('G Dependent events', 'Drawing without replacement', f'''
+slide('G Dependent events', 'Drawing without replacement', f"""
 <div class="def"><p>Two events are <b>dependent</b> if the occurrence of one affects the probability of the other.</p></div>
 <div class="task q"><p>A bag contains 3 red and 2 blue marbles. Two marbles are drawn. Find P(both red).</p></div>
 <div class="two"><div>
-{r(f'<h3>with replacement</h3><div class="formula compact">P(RR) = {fr(3, 5)} · {fr(3, 5)} = <strong>{fr(9, 25)}</strong></div>')}
+{sol('With replacement: the second draw is again 3 red of 5.')}
+{solf(f'P(RR) = {fr(3, 5)} · {fr(3, 5)} = <b>{fr(9, 25)}</b>')}
 </div><div>
-{r(f'<h3>without replacement</h3><div class="formula compact">P(RR) = {fr(3, 5)} · {fr(2, 4)} = <strong>{fr(3, 10)}</strong></div>')}
+{sol('Without replacement: after a red marble only 2 red of 4 are left.')}
+{solf(f'P(RR) = {fr(3, 5)} · {fr(2, 4)} = <b>{fr(3, 10)}</b>')}
 </div></div>
-{r('<p class="small">Without replacement the second factor changes: after a red marble only 2 of the 4 remaining marbles are red.</p>')}
-''')
+""")
 
-slide('G Exercise 3', 'Testing for independence', f'''
+slide('G Exercise 3', 'Testing for independence', f"""
 <div class="task q"><p>P({A}) = 0.4, P({B}) = 0.5 and P({A}{CUP}{B}) = 0.7. Are {A} and {B} independent?</p></div>
-{r(f'<div class="eq big">P({A}{CAP}{B}) = 0.4 + 0.5 − 0.7 = 0.2</div>')}
-{r(f'<div class="eq big">P({A}) · P({B}) = 0.4 · 0.5 = 0.2</div>')}
-{r(f'<p class="result">P({A}{CAP}{B}) = P({A}) · P({B}), so {A} and {B} are <strong>independent</strong>.</p>')}
-''')
+{sol(f'P({A}{CAP}{B}) = P({A}) + P({B}) − P({A}{CUP}{B})')}
+{sol(f'P({A}{CAP}{B}) = 0.4 + 0.5 − 0.7 = 0.2')}
+{sol(f'P({A}) · P({B}) = 0.4 · 0.5 = 0.2')}
+{sol(f'P({A}{CAP}{B}) = P({A}) · P({B}), so {A} and {B} are <b>independent</b>.')}
+""")
 
-slide('G Exercise 4', 'Two archers', f'''
+slide('G Exercise 4', 'Two archers', f"""
 <div class="task q"><p>Anna and Ben shoot at a target independently. Anna hits with probability 0.7, Ben with probability 0.6.</p>
 <p>Find the probability that <b>a)</b> both hit, <b>b)</b> at least one hits, <b>c)</b> neither hits.</p></div>
-{r(f'<div class="eq big"><b>a)</b> P({A}{CAP}{B}) = 0.7 · 0.6 = <b>0.42</b></div>')}
-{r(f'<div class="eq big"><b>b)</b> P({A}{CUP}{B}) = 0.7 + 0.6 − 0.42 = <b>0.88</b></div>')}
-{r(f'<div class="eq big"><b>c)</b> P({A}′{CAP}{B}′) = 0.3 · 0.4 = <b>0.12</b> <span class="small">(check: 1 − 0.88)</span></div>')}
-''')
+{sol(f'<b>a)</b> P({A}{CAP}{B}) = 0.7 · 0.6 = <b>0.42</b>')}
+{sol(f'<b>b)</b> P({A}{CUP}{B}) = 0.7 + 0.6 − 0.42 = <b>0.88</b>')}
+{sol(f"<b>c)</b> P({A}′{CAP}{B}′) = 0.3 · 0.4 = <b>0.12</b>")}
+{sol('Check: 1 − 0.88 = 0.12')}
+""")
 
 section('Practice', 'Exercise 11F: 1, 4, 5<br><span class="small" style="color:#777">Mathematics Core Topics HL, pp. 266–267</span>')
 
