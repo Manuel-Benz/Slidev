@@ -1,0 +1,26 @@
+.law {
+	border: 2px solid #0284c7;
+	background: rgba(125, 211, 252, 0.18);
+	border-radius: 8px;
+	padding: 0.6rem 1.2rem;
+	margin: 0.8rem 0;
+}
+
+.warn {
+	border-left: 5px solid #f97316;
+	background: rgba(249, 115, 22, 0.1);
+	padding: 0.5rem 1rem;
+	margin: 0.8rem 0;
+}
+
+.grid-table td,
+.grid-table th {
+	padding: 0.15rem 0.6rem;
+	text-align: center;
+	border: 1px solid #94a3b8;
+}
+
+.grid-table .hit {
+	background: #7dd3fc;
+	font-weight: bold;
+}
