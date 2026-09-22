@@ -1,17 +1,12 @@
 # Slidev
 
-Slidev-Präsentationen für den Mathematikunterricht.
+Presentations for mathematics lessons, published with GitHub Pages. The start page `index.html` links all presentations.
 
-## Start
+| Folder | Presentation | Language |
+| --- | --- | --- |
+| `equations/` | Equations: power equations, factored form, completing the square (27 slides, Slidev export) | EN |
+| `probability/` | Probability – Exercise 17, Venn diagrams | EN |
+| `wahrscheinlichkeit/` | Wahrscheinlichkeit – Aufgabe 17, Venn-Diagramme | DE |
+| `probability-addition-law/` | Probability – Addition law and independent events (Chapter 11 F–G) | EN |
 
-```bash
-npm install
-npm run dev      # Präsentation im Browser, http://localhost:3030
-npm run export   # PDF-Export
-```
-
-## Inhalt
-
-- `slides.md`: Probability, Kapitel 11 F (addition law) und G (independent events), Mathematics Core Topics HL
-- `components/Venn.vue`: Venn-Diagramm für zwei Ereignisse (`shade`, `disjoint`, `regions`)
-- `setup/katex.ts`: KaTeX-Makro `\P` für die Wahrscheinlichkeit
+Each folder contains a self-contained `index.html` that also works offline.
