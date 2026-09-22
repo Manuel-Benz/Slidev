@@ -19,6 +19,7 @@
 .steps p{margin:6px 0}
 .task p+p{margin-top:6px}
 .center{text-align:center}
+.careful{font-size:21px;line-height:1.35}.careful p{margin:3px 0}
 .solution{color:#b22222;margin:5px 0;font-size:24px;line-height:1.35}
 .solution b,.solution strong{color:#b22222}
 .solution.formula{margin:6px 0;font-size:24px}
@@ -85,7 +86,7 @@
 <div class="reveal"><p class="solution">P(<i>A</i> <span class="sym">∩</span> <i>B</i>) = P(<i>A</i>) · P(<i>B</i>) = 0.3 · 0.5 = <b>0.15</b></p></div>
 <div class="reveal"><p class="solution">P(<i>A</i> <span class="sym">∪</span> <i>B</i>) = P(<i>A</i>) + P(<i>B</i>) − P(<i>A</i> <span class="sym">∩</span> <i>B</i>)</p></div>
 <div class="reveal"><p class="solution">P(<i>A</i> <span class="sym">∪</span> <i>B</i>) = 0.3 + 0.5 − 0.15 = <b>0.65</b></p></div>
-<div class="reveal"><div class="remark"><div class="thm-title" style="color:#c47a00">Careful</div><p>Mutually exclusive does not mean independent. If P(<i>A</i>) &gt; 0, P(<i>B</i>) &gt; 0 and <i>A</i>, <i>B</i> are mutually exclusive, then P(<i>A</i> <span class="sym">∩</span> <i>B</i>) = 0 <span class="sym">≠</span> P(<i>A</i>) · P(<i>B</i>): if <i>A</i> occurs, <i>B</i> cannot occur.</p></div></div>
+<div class="reveal"><div class="remark careful"><div class="thm-title" style="color:#c47a00">Careful: mutually exclusive <span class="sym">≠</span> independent</div><p><b>Mutually exclusive:</b> <i>A</i> and <i>B</i> cannot occur together, so P(<i>A</i> <span class="sym">∩</span> <i>B</i>) = 0.</p><p><b>Independent:</b> <i>A</i> does not affect <i>B</i>, so P(<i>A</i> <span class="sym">∩</span> <i>B</i>) = P(<i>A</i>) · P(<i>B</i>).</p><p>With P(<i>A</i>), P(<i>B</i>) &gt; 0 mutually exclusive events are dependent: if <i>A</i> occurs, <i>B</i> cannot.</p></div></div>
 </div><footer class="slide-footer"><span class="footer-right">10/14</span></footer></section><section class="slide layout-default" aria-label="Slide 11" hidden><header class="slide-header bands-2"><div class="header-section">G Dependent events</div><div class="header-subsection">Drawing without replacement</div></header><nav class="nav-dots" aria-label="Slides"><button class="nav-dot" data-go="0" aria-label="Slide 1"></button><button class="nav-dot" data-go="1" aria-label="Slide 2"></button><button class="nav-dot" data-go="2" aria-label="Slide 3"></button><button class="nav-dot" data-go="3" aria-label="Slide 4"></button><button class="nav-dot" data-go="4" aria-label="Slide 5"></button><button class="nav-dot" data-go="5" aria-label="Slide 6"></button><button class="nav-dot" data-go="6" aria-label="Slide 7"></button><button class="nav-dot" data-go="7" aria-label="Slide 8"></button><button class="nav-dot" data-go="8" aria-label="Slide 9"></button><button class="nav-dot" data-go="9" aria-label="Slide 10"></button><button class="nav-dot" data-go="10" aria-label="Slide 11"></button><button class="nav-dot" data-go="11" aria-label="Slide 12"></button><button class="nav-dot" data-go="12" aria-label="Slide 13"></button><button class="nav-dot" data-go="13" aria-label="Slide 14"></button></nav><div class="slide-content">
 <div class="def"><p>Two events are <b>dependent</b> if the occurrence of one affects the probability of the other.</p></div>
 <div class="task q"><p>A bag contains 3 red and 2 blue marbles. Two marbles are drawn. Find P(both red).</p></div>

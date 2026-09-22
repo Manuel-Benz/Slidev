@@ -23,6 +23,7 @@ EXTRA_CSS = """<style>
 .steps p{margin:6px 0}
 .task p+p{margin-top:6px}
 .center{text-align:center}
+.careful{font-size:21px;line-height:1.35}.careful p{margin:3px 0}
 .solution{color:#b22222;margin:5px 0;font-size:24px;line-height:1.35}
 .solution b,.solution strong{color:#b22222}
 .solution.formula{margin:6px 0;font-size:24px}
@@ -224,7 +225,10 @@ slide('G Independent events', 'Example', f"""
 {sol(f'P({A}{CAP}{B}) = P({A}) · P({B}) = 0.3 · 0.5 = <b>0.15</b>')}
 {sol(f'P({A}{CUP}{B}) = P({A}) + P({B}) − P({A}{CAP}{B})')}
 {sol(f'P({A}{CUP}{B}) = 0.3 + 0.5 − 0.15 = <b>0.65</b>')}
-{r(f'<div class="remark"><div class="thm-title" style="color:#c47a00">Careful</div><p>Mutually exclusive does not mean independent. If P({A}) &gt; 0, P({B}) &gt; 0 and {A}, {B} are mutually exclusive, then P({A}{CAP}{B}) = 0 ≠ P({A}) · P({B}): if {A} occurs, {B} cannot occur.</p></div>')}
+{r(f'<div class="remark careful"><div class="thm-title" style="color:#c47a00">Careful: mutually exclusive ≠ independent</div>'
+	f'<p><b>Mutually exclusive:</b> {A} and {B} cannot occur together, so P({A}{CAP}{B}) = 0.</p>'
+	f'<p><b>Independent:</b> {A} does not affect {B}, so P({A}{CAP}{B}) = P({A}) · P({B}).</p>'
+	f'<p>With P({A}), P({B}) &gt; 0 mutually exclusive events are dependent: if {A} occurs, {B} cannot.</p></div>')}
 """)
 
 slide('G Dependent events', 'Drawing without replacement', f"""
